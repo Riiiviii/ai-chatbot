@@ -18,9 +18,9 @@ server_params = MCPServerSseParams(url="http://localhost:8001/sse")
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(application: FastAPI):
     async with MCPServerSse(server_params) as server:
-        app.state.agent = create_agent([server])
+        application.state.agent = create_agent([server])
         yield
 
 
