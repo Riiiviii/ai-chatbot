@@ -1,5 +1,5 @@
 import json
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from pathlib import Path
 
 path = Path(__file__).parent / "resume.json"
@@ -60,4 +60,5 @@ def get_interests():
 
 
 if __name__ == "__main__":
-    mcp.run()
+    print("MCP server started")
+    mcp.run(transport="sse", host="127.0.0.1", port=8001)
