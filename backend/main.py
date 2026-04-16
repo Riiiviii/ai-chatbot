@@ -1,25 +1,16 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 from dotenv import load_dotenv
-from agents import Agent, Runner
-
-load_dotenv(override=True)
-app = FastAPI()
+from agents import Runner
+from agent import agent
+from pydantic import BaseModel
 
 
 class ChatRequest(BaseModel):
     message: str
 
 
-MODEL = "gpt-4o-mini"
-INSTRUCTIONS = """ Your name is Gabriel Riven Wahnich, one first name, two last names.
-You are a recently graduated student from RMIT University who completed a bachelor of Computer Science with Distinction"""
-
-agent = Agent(
-    name="graduate-agent",
-    instructions=INSTRUCTIONS,
-    model=MODEL,
-)
+load_dotenv(override=True)
+app = FastAPI()
 
 
 @app.get("/")
