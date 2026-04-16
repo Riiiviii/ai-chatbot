@@ -5,11 +5,13 @@ from agent import agent
 from pydantic import BaseModel
 
 
+load_dotenv(override=True)
+
+
 class ChatRequest(BaseModel):
     message: str
 
 
-load_dotenv(override=True)
 app = FastAPI()
 
 
