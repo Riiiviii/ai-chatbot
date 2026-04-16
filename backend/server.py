@@ -35,12 +35,6 @@ def get_education():
     return data["education"]
 
 
-# @mcp.tool()
-# def get_projects():
-#     """Get personal projects"""
-#     return data["experience"]
-
-
 @mcp.tool()
 def get_socials():
     """Get work socials"""
