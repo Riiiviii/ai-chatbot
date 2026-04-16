@@ -1,8 +1,10 @@
-from fastapi import FastAPI
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request
 from dotenv import load_dotenv
 from agents import Runner
-from agent import agent
+from agent import create_agent
 from pydantic import BaseModel
+from agents.mcp import MCPServerSse, MCPServerSseParams
 
 
 load_dotenv(override=True)
@@ -12,7 +14,17 @@ class ChatRequest(BaseModel):
     message: str
 
 
-app = FastAPI()
+server_params = MCPServerSseParams(url="http://localhost:8001/sse")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with MCPServerSse(server_params) as server:
+        app.state.agent = create_agent([server])
+        yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
@@ -21,6 +33,7 @@ def root():
 
 
 @app.post("/chat")
-async def chat_message(chat_request: ChatRequest):
+async def chat_message(chat_request: ChatRequest, request: Request):
+    agent = request.app.state.agent
     response = await Runner.run(agent, chat_request.message)
     return {"message": chat_request.message, "response": response.final_output}
