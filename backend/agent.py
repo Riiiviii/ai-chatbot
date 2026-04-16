@@ -1,6 +1,5 @@
-from agents import Agent, Runner, trace
-from agents.mcp import MCPServerSse, MCPServerSseParams
-from dotenv import load_dotenv
+from agents import Agent
+
 
 MODEL = "gpt-4o-mini"
 INSTRUCTIONS = """ 
