@@ -1,19 +1,62 @@
+import json
 from mcp.server.fastmcp import FastMCP
-from enum import Enum
+from pathlib import Path
 
+path = Path(__file__).parent / "resume.json"
 
-class ResumeSection(Enum):
-    EXPERIENCE = "experience"
-    SKILLS = "skills"
-    GITHUB = "github"
+with open(path, "r") as f:
+    data = json.load(f)
 
 
 mcp = FastMCP("resume-mcp-server")
 
 
 @mcp.tool()
+def get_profile():
+    """Get personal information"""
+    return data["profile"]
+
+
+@mcp.tool()
 def get_experience():
     """Get personal work experience"""
+    return data["experience"]
+
+
+@mcp.tool()
+def get_technical_skills():
+    """Get programming technical skills"""
+    return data["skills"]
+
+
+@mcp.tool()
+def get_education():
+    """Get education"""
+    return data["education"]
+
+
+# @mcp.tool()
+# def get_projects():
+#     """Get personal projects"""
+#     return data["experience"]
+
+
+@mcp.tool()
+def get_socials():
+    """Get work socials"""
+    return data["socials"]
+
+
+@mcp.tool()
+def get_references():
+    """Get work references"""
+    return data["references"]
+
+
+@mcp.tool()
+def get_interests():
+    """Get personal interests"""
+    return data["interests"]
 
 
 if __name__ == "__main__":

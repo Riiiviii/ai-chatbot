@@ -1,0 +1,88 @@
+{
+  "profile": {
+    "name": "Gabriel Riven Wahnich",
+    "email": "riven.development@gmail.com",
+    "mobile": "0488 992 283",
+    "location": "Melbourne VIC 3204",
+    "summary": "Computer Science graduate (with Distinction) specialising in Artificial Intelligence and Machine Learning, seeking a junior full-stack or AI engineering role. Practical experience building full-stack applications and agentic AI systems using modern LLM tooling. Strong foundation in Python, TypeScript, and backend development. Fluent in English and Spanish."
+  },
+  "skills": {
+    "ai_and_ml": ["Python", "OpenAI SDK", "multi-agent systems", "tool calling", "LLM integration", "PyTorch", "scikit-learn"],
+    "languages": ["TypeScript", "JavaScript", "Python", "Java", "C++"],
+    "frontend": ["React", "Next.js"],
+    "backend": ["Node.js", "Express", "NestJS", "REST APIs"],
+    "data_and_infrastructure": ["MongoDB", "PostgreSQL", "Docker", "Microservices"],
+    "tooling": ["Git", "GitHub", "Jira", "Selenium", "JMeter"]
+  },
+  "experience": [
+    {
+      "title": "Freelance Software Engineer",
+      "company": "Olways Pets",
+      "duration": "Jan 2026 to Present",
+      "description": "Melbourne-based commission artist platform offering handmade pet portraits shipped worldwide.",
+      "responsibilities": [
+        "Designed and built a full-stack platform managing ~500 artwork assets, testimonials, and customer enquiries",
+        "Developed a secure admin panel using JWT authentication and Argon2 password hashing",
+        "Designed and implemented a REST API with NestJS and PostgreSQL (Neon)",
+        "Offloaded image storage, optimisation, and delivery to Cloudinary using URL-based transformations",
+        "Built a responsive frontend using React (Vite), Tailwind CSS, shadcn/ui, and Framer Motion",
+        "Implemented email handling via Resend to manage and route customer enquiries",
+        "Preparing application for production deployment including environment configuration and client handoff"
+      ]
+    },
+    {
+      "title": "Software Engineer Intern",
+      "company": "Musical Moon",
+      "duration": "Jan 2025 to May 2025",
+      "description": "Early-stage startup building a marketplace platform for musician collaboration.",
+      "responsibilities": [
+        "Designed and shipped an Order History feature end-to-end across web (Next.js) and mobile (Expo)",
+        "Built and maintained microservices supporting order data flow",
+        "Integrated secure file-download functionality into the Order History interface for cross-artist file sharing",
+        "Containerised microservices using Docker",
+        "Collaborated via GitHub with branching, pull requests, and code review"
+      ]
+    },
+    {
+      "title": "Systems Assembler and Hardware Technician",
+      "company": "PLE Computers",
+      "duration": "Jun 2021 to Jan 2024",
+      "description": "Fast-paced retail and enterprise environment handling high volumes of custom system builds and hardware support.",
+      "responsibilities": [
+        "Diagnosed and resolved hardware faults across consumer and enterprise systems",
+        "Assembled custom PC builds to specification and performed component-level quality testing",
+        "Applied BIOS and firmware updates to maintain hardware compatibility and system stability"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "RMIT University",
+      "degree": "Bachelor of Computer Science with Distinction",
+      "minor": "Artificial Intelligence and Machine Learning",
+      "graduation_date": "14th December 2025"
+    },
+    {
+      "institution": "McKinnon Secondary College",
+      "degree": "High School Certificate",
+      "graduation_date": "17th November 2017"
+    }
+  ],
+  "interests": [
+    "Game Development — building small-scale interactive projects with Unity and Godot",
+    "Football (Soccer) — follower of local A-League and international leagues"
+  ],
+  "languages": ["English (fluent)", "Spanish (fluent)"],
+  "socials": {
+    "email": "riven.development@gmail.com",
+    "github": "https://github.com/Riiiviii"
+  },
+  "references": [
+    {
+      "name": "Jason Riley",
+      "title": "Branch Manager",
+      "company": "PLE Computers",
+      "contact": "04 7645 9743"
+    }
+  ]
+}
