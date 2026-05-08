@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from graduate_agent import GraduateAgent
 from agents.mcp import MCPServerSse, MCPServerSseParams
-from schemas.chat import ChatRequest
+from schemas.chat import ChatRequest, ChatResponse
 
 load_dotenv(override=True)
 
@@ -28,8 +28,8 @@ def root():
     return {"status": "ok"}
 
 
-@app.post("/chat")
-async def chat_message(chat_request: ChatRequest, request: Request):
+@app.post("/chat", response_model=ChatResponse)
+async def chat_message(chat_request: ChatRequest, request: Request) -> ChatResponse:
     agent = request.app.state.agent
-    response = await Runner.run(agent, chat_request.message)
-    return {"response": response.final_output}
+    result = await Runner.run(agent, chat_request.message)
+    return ChatResponse(response=result.final_output)
