@@ -10,7 +10,9 @@ from schemas.chat import ChatRequest, ChatResponse
 load_dotenv(override=True)
 
 
-server_params = MCPServerSseParams(url=os.getenv("URL", "http://localhost:8001/sse"))
+server_params = MCPServerSseParams(
+    url=os.getenv("MCP_SERVER_URL", "http://localhost:8001/sse")
+)
 
 
 @asynccontextmanager
