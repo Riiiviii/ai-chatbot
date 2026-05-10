@@ -49,13 +49,32 @@ into `Runner.run()`. The Agents SDK is designed for the latter.
 
 ## Configuration
 
-Environment variables are read at module import via `os.getenv` with
-sensible local-development defaults. Currently one variable
-(`MCP_SERVER_URL`).
+Environment variables are loaded via a hand-rolled `Settings` class in
+`settings.py`. Currently exposes `mcp_server_url` and `cors_origins`,
+both with sensible local-development defaults. Comma-separated env vars
+are split and stripped of whitespace at load time.
 
-**Revisit when:** a second or third env var is introduced (CORS origins
-is the likely trigger). At that point, consolidate into a `Settings`
-class — either hand-rolled or `pydantic-settings`.
+**Revisit when:** the env var count grows past ~5, validation becomes
+non-trivial (typed values, optional vs required complexity), or
+inter-service config is introduced. At that point migrate to
+`pydantic-settings` (`BaseSettings`) — same library family already in
+use for request/response models.
+
+## CORS configuration
+
+`CORSMiddleware` allows `GET` and `POST` from configured origins, with
+`allow_credentials=False` and `allow_headers=["*"]`. The chatbot is
+stateless and uses no cookie or session-based auth, so credentials are
+deliberately disabled.
+
+`allow_headers=["*"]` is acceptable for v1 because the only route
+accepts a JSON body validated by Pydantic — header content does not
+influence handler logic.
+
+**Revisit if:** authentication is introduced (credentials may need to
+become `True` and origins must remain exact rather than wildcard), or
+sensitive endpoints are added that warrant least-privilege header
+restriction (`["Content-Type", "Authorization"]`).
 
 ## Schemas directory
 
@@ -63,8 +82,9 @@ Pydantic models live in `schemas/` grouped by domain (`schemas/chat.py`).
 Models are kept here rather than alongside their consuming routes, to
 prepare for reuse as the project adds endpoints.
 
-**Revisit if:** schemas are only ever used in one module and the
-indirection costs more than the structure provides.
+**Revisit if:** the project remains at one schema file for a long time
+and the directory feels like over-structure. For now, the structure is
+preserved in anticipation of additional endpoints.
 
 ## Out of scope for v1
 
