@@ -2,7 +2,7 @@ from agents import Runner
 from settings import settings
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
-from graduate_agent import GraduateAgent
+from agent import GraduateAgent
 from agents.mcp import MCPServerSse, MCPServerSseParams
 from schemas.chat import ChatRequest, ChatResponse
 from fastapi.middleware.cors import CORSMiddleware
