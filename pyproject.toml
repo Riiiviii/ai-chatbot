@@ -10,3 +10,6 @@ dependencies = [
     "openai-agents>=0.14.1",
     "python-dotenv>=1.2.2",
 ]
+
+[tool.fastapi]
+entrypoint = "main:app"
