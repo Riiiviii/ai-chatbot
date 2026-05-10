@@ -1,18 +1,13 @@
-import os
 from agents import Runner
-from dotenv import load_dotenv
+from settings import settings
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from graduate_agent import GraduateAgent
 from agents.mcp import MCPServerSse, MCPServerSseParams
 from schemas.chat import ChatRequest, ChatResponse
+from fastapi.middleware.cors import CORSMiddleware
 
-load_dotenv(override=True)
-
-
-server_params = MCPServerSseParams(
-    url=os.getenv("MCP_SERVER_URL", "http://localhost:8001/sse")
-)
+server_params = MCPServerSseParams(url=settings.mcp_server_url)
 
 
 @asynccontextmanager
@@ -23,6 +18,13 @@ async def lifespan(application: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
