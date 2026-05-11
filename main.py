@@ -1,5 +1,5 @@
 from agents import Runner
-
+import logging
 from settings import settings
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
@@ -7,6 +7,10 @@ from agent import GraduateAgent
 from agents.mcp import MCPServerSse, MCPServerSseParams
 from schemas.chat import ChatRequest, ChatResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 server_params = MCPServerSseParams(url=settings.mcp_server_url)
 
@@ -39,12 +43,14 @@ async def chat_message(chat_request: ChatRequest, request: Request) -> ChatRespo
     try:
         result = await Runner.run(agent, chat_request.message)
     except Exception:
+        logger.exception("Chat request failed")
         raise HTTPException(
             status_code=502,
             detail="The chat service is currently unavailable",
         )
 
     if not result.final_output:
+        logger.warning("Agent returned empty response")
         raise HTTPException(
             status_code=502,
             detail="The chat service returned no response",
