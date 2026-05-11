@@ -1,4 +1,5 @@
 from agents import Runner
+
 from settings import settings
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
@@ -41,6 +42,12 @@ async def chat_message(chat_request: ChatRequest, request: Request) -> ChatRespo
         raise HTTPException(
             status_code=502,
             detail="The chat service is currently unavailable",
+        )
+
+    if not result.final_output:
+        raise HTTPException(
+            status_code=502,
+            detail="The chat service returned no response",
         )
 
     return ChatResponse(response=result.final_output)
