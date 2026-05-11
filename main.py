@@ -1,7 +1,7 @@
 from agents import Runner
 from settings import settings
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from agent import GraduateAgent
 from agents.mcp import MCPServerSse, MCPServerSseParams
 from schemas.chat import ChatRequest, ChatResponse
@@ -35,5 +35,12 @@ def root():
 @app.post("/chat", response_model=ChatResponse)
 async def chat_message(chat_request: ChatRequest, request: Request) -> ChatResponse:
     agent = request.app.state.agent
-    result = await Runner.run(agent, chat_request.message)
+    try:
+        result = await Runner.run(agent, chat_request.message)
+    except Exception:
+        raise HTTPException(
+            status_code=502,
+            detail="The chat service is currently unavailable",
+        )
+
     return ChatResponse(response=result.final_output)
