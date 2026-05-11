@@ -8,7 +8,6 @@ from agents.mcp import MCPServerSse, MCPServerSseParams
 from schemas.chat import ChatRequest, ChatResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -42,12 +41,12 @@ async def chat_message(chat_request: ChatRequest, request: Request) -> ChatRespo
     agent = request.app.state.agent
     try:
         result = await Runner.run(agent, chat_request.message)
-    except Exception:
+    except Exception as err:
         logger.exception("Chat request failed")
         raise HTTPException(
             status_code=502,
             detail="The chat service is currently unavailable",
-        )
+        ) from err
 
     if not result.final_output:
         logger.warning("Agent returned empty response")
