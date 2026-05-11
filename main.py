@@ -1,11 +1,15 @@
 from agents import Runner
+import logging
 from settings import settings
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
-from graduate_agent import GraduateAgent
+from fastapi import FastAPI, HTTPException, Request
+from agent import GraduateAgent
 from agents.mcp import MCPServerSse, MCPServerSseParams
 from schemas.chat import ChatRequest, ChatResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+logger = logging.getLogger(__name__)
+
 
 server_params = MCPServerSseParams(url=settings.mcp_server_url)
 
@@ -35,5 +39,20 @@ def root():
 @app.post("/chat", response_model=ChatResponse)
 async def chat_message(chat_request: ChatRequest, request: Request) -> ChatResponse:
     agent = request.app.state.agent
-    result = await Runner.run(agent, chat_request.message)
+    try:
+        result = await Runner.run(agent, chat_request.message)
+    except Exception as err:
+        logger.exception("Chat request failed")
+        raise HTTPException(
+            status_code=502,
+            detail="The chat service is currently unavailable",
+        ) from err
+
+    if not result.final_output:
+        logger.warning("Agent returned empty response")
+        raise HTTPException(
+            status_code=502,
+            detail="The chat service returned no response",
+        )
+
     return ChatResponse(response=result.final_output)
