@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/*.py[cod]
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# Virtual Environment
+.venv
+.env
+
+# Personal
+notes/
+DESIGN.md
+
+# General
+LICENSE
+README.md
+
+# VS Code
+.vscode/
