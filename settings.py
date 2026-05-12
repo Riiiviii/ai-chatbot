@@ -8,13 +8,15 @@ class Settings:
 
     def __init__(self) -> None:
         self.cors_origins: list[str] = list(
-            map(
-                str.strip, os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
-            )
+            map(str.strip, self._required("CORS_ORIGINS").split(","))
         )
-        self.mcp_server_url: str = os.getenv(
-            "MCP_SERVER_URL", "http://localhost:8001/sse"
-        )
+        self.mcp_server_url: str = self._required("MCP_SERVER_URL")
+
+    def _required(self, key: str) -> str:
+        value = os.getenv(key)
+        if value is None:
+            raise RuntimeError(f"{key} is required")
+        return value
 
 
 settings = Settings()
