@@ -1,5 +1,5 @@
 FROM python:3.12-slim-bookworm
-COPY --from=docker.io/astral/uv:latest /uv /uvx /bin/
+COPY --from=docker.io/astral/uv:0.11.6 /uv /uvx /bin/
 WORKDIR /app
 
 COPY pyproject.toml ./

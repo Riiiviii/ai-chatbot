@@ -27,7 +27,7 @@ The MCP server (`mcp_server.py`) exposes seven tools backed by `resume.json` —
 
 ## Project structure
 
-```
+```text
 ai-chatbot/
 ├── main.py          # FastAPI app, lifespan, routes
 ├── agent.py         # GraduateAgent wrapper
@@ -109,7 +109,9 @@ Send a message to the agent.
 **Response:**
 
 ```json
-{ "response": "<TODO: paste a real example response from your testing>" }
+{
+  "response": "Gabriel graduated from RMIT University with a Bachelor of Computer Science, achieving Distinction. His studies focused on software engineering and included practical project work like full-stack app development."
+}
 ```
 
 **Error responses:**
